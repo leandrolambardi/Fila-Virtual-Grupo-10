@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Turno = require('./model/turno.model');
+const Turno = require('./models/turno.model');
 
 // Registra el error técnico y lo relanza como un error simple, sin objetos de Mongoose.
 const registrarError = (metodo, error) => {
