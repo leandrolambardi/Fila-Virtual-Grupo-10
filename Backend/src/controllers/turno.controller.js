@@ -64,5 +64,6 @@ module.exports = {
   listarTurnos,
   crearTurno,
   obtenerTurno,
-  actualizarEstadoTurno
+  actualizarEstadoTurno,
+  eliminarTurno
 };
