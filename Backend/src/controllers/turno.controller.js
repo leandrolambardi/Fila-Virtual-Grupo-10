@@ -51,6 +51,15 @@ const actualizarEstadoTurno = async (req, res) => {
   }
 };
 
+const eliminarTurno = async (req, res) => {
+  try {
+    await turnoService.eliminarTurno(req.params.id);
+    res.status(200).json({ mensaje: 'Turno eliminado correctamente.' });
+  } catch (error) {
+    responderError(res, 'eliminarTurno', error);
+  }
+};
+
 module.exports = {
   listarTurnos,
   crearTurno,
