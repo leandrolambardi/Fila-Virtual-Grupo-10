@@ -105,6 +105,20 @@ const actualizarEstadoTurno = async (id, estado, equipo) => {
   return turnoRepository.actualizarEstado(id, datos);
 };
 
+const eliminarTurno = async (id) => {
+  if (!turnoRepository.esIdValido(id)) {
+    lanzarError('eliminarTurno', 400, 'El identificador del turno no es válido.');
+  }
+  const turno = await turnoRepository.buscarPorId(id);
+  if (!turno) {
+    lanzarError('eliminarTurno', 404, 'Turno no encontrado.');
+  }
+  if (turno.estado === 'retirado') {
+    lanzarError('eliminarTurno', 409, 'No se puede eliminar un turno retirado.');
+  }
+  return turnoRepository.eliminar(id);
+};
+
 module.exports = {
   ErrorTurno,
   listarTurnos,
@@ -113,5 +127,6 @@ module.exports = {
   crear,
   obtenerTurno,
   obtenerUltimoNumero,
-  actualizarEstadoTurno
+  actualizarEstadoTurno,
+  eliminarTurno
 };
