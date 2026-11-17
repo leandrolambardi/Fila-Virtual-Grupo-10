@@ -35,6 +35,15 @@ const buscarPorId = async (id) => {
   }
 };
 
+const eliminar = async (id) => {
+  try {
+    const turno = await Turno.findByIdAndDelete(id);
+    return turno ? turno.toObject() : null;
+  } catch (error) {
+    registrarError('eliminar', error);
+  }
+};
+
 const obtenerUltimoNumero = async () => {
   try {
     const turno = await Turno.findOne().sort({ numero: -1 }).lean();
@@ -61,6 +70,7 @@ module.exports = {
   obtenerUltimoNumero,
   buscarPorId,
   esIdValido,
+  eliminar,
   actualizarEstado
 };
 
