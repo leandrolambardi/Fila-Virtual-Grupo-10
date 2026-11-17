@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-   "start": "npx nodemon src/app.js",
+    "start": "npx nodemon src/app.js",
     "dev": "nodemon src/app.js"
   },
   "repository": {

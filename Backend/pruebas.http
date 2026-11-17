@@ -1,0 +1,73 @@
+### LEANDRO - GET: listar todos los turnos
+GET http://localhost:3000/api/turnos
+
+### LEANDRO - GET: filtrar turnos en espera
+GET http://localhost:3000/api/turnos?estado=en_espera
+
+### LEANDRO - GET: filtrar turnos retirados
+GET http://localhost:3000/api/turnos?estado=retirado
+
+### LEANDRO - GET: filtrar turnos cancelados
+GET http://localhost:3000/api/turnos?estado=cancelado
+
+### LEANDRO - GET: estado inválido (400)
+GET http://localhost:3000/api/turnos?estado=invalido
+
+
+#TODO OK!!
+
+#-----------------------------------------------------------
+
+### EVELYN - Crear turno correctamente
+POST http://localhost:3000/api/turnos
+Content-Type: application/json
+
+{
+  "nombre": "Luciana Gonzalez",
+  "dni": "45689012",
+  "curso": "4 B"
+}
+
+### EVELYN - Crear otro turno
+POST http://localhost:3000/api/turnos
+Content-Type: application/json
+
+{
+  "nombre": "Maria Lopez",
+  "dni": "34567890",
+  "curso": "4 A"
+}
+
+### EVELYN - Faltan campos obligatorios (400)
+POST http://localhost:3000/api/turnos
+Content-Type: application/json
+
+{
+  "nombre": "Pedro",
+  "dni": "12345678"
+}
+
+### EVELYN - DNI incorrecto (400)
+POST http://localhost:3000/api/turnos
+Content-Type: application/json
+
+{
+  "nombre": "Ana Garcia",
+  "dni": "123m",
+  "curso": "2 A"
+}
+
+### EVELYN - DNI con puntos (400)
+POST http://localhost:3000/api/turnos
+Content-Type: application/json
+
+{
+  "nombre": "Ailen Avalos",
+  "dni": "12.345.678",
+  "curso": "5 B"
+}
+
+#TODO Funciona!!
+
+#------------------------------------------------------------
+
