@@ -22,3 +22,7 @@ const listarTurnos = async (req, res) => {
     responderError(res, 'listarTurnos', error);
   }
 };
+
+module.exports = {
+  listarTurnos,
+};
