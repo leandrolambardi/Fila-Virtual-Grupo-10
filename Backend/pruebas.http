@@ -116,3 +116,21 @@ Content-Type: application/json
 {
   "estado": "cancelado"
 }
+
+### EDUARDO - Buscar turno por ID (200)
+GET http://localhost:3000/api/turnos/6afcd094b11c8b21836536bb
+
+### EDUARDO - Buscar con ID inválido (400)
+GET http://localhost:3000/api/turnos/123
+
+### EDUARDO - Buscar turno inexistente (404)
+GET http://localhost:3000/api/turnos/507f1f77bcf86cd799439011
+
+### EDUARDO - Eliminar turno en espera (200)
+DELETE http://localhost:3000/api/turnos/6afcd094b11c8b21836536bb
+
+### EDUARDO - Eliminar con ID inválido (400)
+DELETE http://localhost:3000/api/turnos/123
+
+### EDUARDO - Eliminar turno inexistente (404)
+DELETE http://localhost:3000/api/turnos/507f1f77bcf86cd799439011
