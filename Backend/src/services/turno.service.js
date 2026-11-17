@@ -25,6 +25,6 @@ const listarTurnos = async (estado) => {
 
 module.exports = {
   ErrorTurno,
-  crearTurno,
-  listarTurnos
+  listarTurnos,
+  lanzarError,
 };
