@@ -17,9 +17,28 @@ const listar = async (estado) => {
   }
 };
 
+const crear = async (datos) => {
+  try {
+    const turno = await Turno.create(datos);
+    return turno.toObject();
+  } catch (error) {
+    registrarError('crear', error);
+  }
+};
+
+const obtenerUltimoNumero = async () => {
+  try {
+    const turno = await Turno.findOne().sort({ numero: -1 }).lean();
+    return turno ? turno.numero : 0;
+  } catch (error) {
+    registrarError('obtenerUltimoNumero', error);
+  }
+};
 
 module.exports = {
   listar,
+  crear,
+  obtenerUltimoNumero
 };
 
 
