@@ -41,8 +41,19 @@ const obtenerTurno = async (req, res) => {
   }
 };
 
+const actualizarEstadoTurno = async (req, res) => {
+  try {
+    const { estado, equipo } = req.body || {};
+    const turno = await turnoService.actualizarEstadoTurno(req.params.id, estado, equipo);
+    res.status(200).json(turno);
+  } catch (error) {
+    responderError(res, 'actualizarEstadoTurno', error);
+  }
+};
+
 module.exports = {
   listarTurnos,
   crearTurno,
-  obtenerTurno
+  obtenerTurno,
+  actualizarEstadoTurno
 };

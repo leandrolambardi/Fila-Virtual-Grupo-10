@@ -46,12 +46,22 @@ const obtenerUltimoNumero = async () => {
 
 const esIdValido = (id) => mongoose.isValidObjectId(id);
 
+const actualizarEstado = async (id, datos) => {
+  try {
+    const turno = await Turno.findByIdAndUpdate(id, datos, { new: true });
+    return turno ? turno.toObject() : null;
+  } catch (error) {
+    registrarError('actualizarEstado', error);
+  }
+};
+
 module.exports = {
   listar,
   crear,
   obtenerUltimoNumero,
   buscarPorId,
-  esIdValido
+  esIdValido,
+  actualizarEstado
 };
 
 

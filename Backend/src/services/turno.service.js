@@ -76,6 +76,35 @@ const obtenerUltimoNumero = async () => {
   }
 };
 
+
+const actualizarEstadoTurno = async (id, estado, equipo) => {
+  if (!turnoRepository.esIdValido(id)) {
+    lanzarError('actualizarEstadoTurno', 400, 'El identificador del turno no es válido.');
+  }
+  if (estado !== 'retirado' && estado !== 'cancelado') {
+    lanzarError('actualizarEstadoTurno', 400, 'El estado debe ser retirado o cancelado.');
+  }
+  if (estado === 'retirado' && (typeof equipo !== 'string' || equipo.trim() === '')) {
+    lanzarError('actualizarEstadoTurno', 400, 'Indicá el equipo entregado para registrar el retiro.');
+  }
+
+  const turno = await turnoRepository.buscarPorId(id);
+  if (!turno) {
+    lanzarError('actualizarEstadoTurno', 404, 'Turno no encontrado.');
+  }
+  if (turno.estado !== 'en_espera') {
+    lanzarError('actualizarEstadoTurno', 409, 'Solo se puede modificar un turno en espera.');
+  }
+
+  const datos = { estado };
+  if (estado === 'retirado') {
+    datos.equipo = equipo.trim();
+    datos.fechaRetiro = new Date();
+  }
+
+  return turnoRepository.actualizarEstado(id, datos);
+};
+
 module.exports = {
   ErrorTurno,
   listarTurnos,
@@ -83,5 +112,6 @@ module.exports = {
   crearTurno,
   crear,
   obtenerTurno,
-  obtenerUltimoNumero
+  obtenerUltimoNumero,
+  actualizarEstadoTurno
 };
