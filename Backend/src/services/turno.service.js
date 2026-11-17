@@ -2,7 +2,7 @@ const turnoRepository = require('../repositories/turno.repository');
 
 const ESTADOS_VALIDOS = ['en_espera', 'retirado', 'cancelado'];
 
-// Error propio del servicio: lleva el código HTTP y el mensaje del catálogo.
+
 class ErrorTurno extends Error {
   constructor(codigo, mensaje) {
     super(mensaje);
@@ -16,6 +16,30 @@ const lanzarError = (metodo, codigo, mensaje) => {
   throw new ErrorTurno(codigo, mensaje);
 };
 
+const crearTurno = async (datos) => {
+  const { nombre, dni, curso } = datos || {};
+  const faltaCampo = (valor) => typeof valor !== 'string' || valor.trim() === '';
+  const faltaDni = dni === undefined || dni === null || (typeof dni === 'string' && dni.trim() === '');
+
+  if (faltaCampo(nombre) || faltaDni || faltaCampo(curso)) {
+    lanzarError('crearTurno', 400, 'Completá nombre, DNI y curso.');
+  }
+  if (typeof dni !== 'string' || !/^\d{7,8}$/.test(dni.trim())) {
+    lanzarError('crearTurno', 400, 'El DNI debe tener 7 u 8 dígitos, sin puntos ni espacios.');
+  }
+
+  const ultimoNumero = await turnoRepository.obtenerUltimoNumero();
+
+  return turnoRepository.crear({
+    numero: ultimoNumero + 1,
+    nombre: nombre.trim(),
+    dni: dni.trim(),
+    curso: curso.trim(),
+    estado: 'en_espera',
+    fechaCreacion: new Date(),
+  });
+};
+
 const listarTurnos = async (estado) => {
   if (estado !== undefined && (typeof estado !== 'string' || !ESTADOS_VALIDOS.includes(estado))) {
     lanzarError('listarTurnos', 400, 'El estado indicado no es válido.');
@@ -23,8 +47,29 @@ const listarTurnos = async (estado) => {
   return turnoRepository.listar(estado);
 };
 
+const crear = async (datos) => {
+  try {
+    const turno = await Turno.create(datos);
+    return turno.toObject();
+  } catch (error) {
+    registrarError('crear', error);
+  }
+};
+
+const obtenerUltimoNumero = async () => {
+  try {
+    const turno = await Turno.findOne().sort({ numero: -1 }).lean();
+    return turno ? turno.numero : 0;
+  } catch (error) {
+    registrarError('obtenerUltimoNumero', error);
+  }
+};
+
 module.exports = {
   ErrorTurno,
   listarTurnos,
   lanzarError,
+  crearTurno,
+  crear,
+  obtenerUltimoNumero
 };
