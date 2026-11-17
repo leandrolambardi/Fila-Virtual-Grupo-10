@@ -26,6 +26,15 @@ const crear = async (datos) => {
   }
 };
 
+const buscarPorId = async (id) => {
+  try {
+    const turno = await Turno.findById(id).lean();
+    return turno;
+  } catch (error) {
+    registrarError('buscarPorId', error);
+  }
+};
+
 const obtenerUltimoNumero = async () => {
   try {
     const turno = await Turno.findOne().sort({ numero: -1 }).lean();
@@ -35,10 +44,14 @@ const obtenerUltimoNumero = async () => {
   }
 };
 
+const esIdValido = (id) => mongoose.isValidObjectId(id);
+
 module.exports = {
   listar,
   crear,
-  obtenerUltimoNumero
+  obtenerUltimoNumero,
+  buscarPorId,
+  esIdValido
 };
 
 
