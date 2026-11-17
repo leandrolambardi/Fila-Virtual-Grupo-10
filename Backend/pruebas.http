@@ -71,3 +71,48 @@ Content-Type: application/json
 
 #------------------------------------------------------------
 
+
+
+
+
+
+### AYLEN - Marcar turno como retirado (200)
+PATCH http://localhost:3000/api/turnos/REEMPLAZAR_ID/estado
+Content-Type: application/json
+
+{
+  "estado": "retirado",
+  "equipo": "Notebook Lenovo"
+}
+
+### AYLEN - Cancelar turno (200)
+PATCH http://localhost:3000/api/turnos/REEMPLAZAR_ID/estado
+Content-Type: application/json
+
+{
+  "estado": "cancelado"
+}
+
+### AYLEN - Estado incorrecto (400)
+PATCH http://localhost:3000/api/turnos/REEMPLAZAR_ID/estado
+Content-Type: application/json
+
+{
+  "estado": "pendiente"
+}
+
+### AYLEN - Retirar sin indicar equipo (400)
+PATCH http://localhost:3000/api/turnos/REEMPLAZAR_ID/estado
+Content-Type: application/json
+
+{
+  "estado": "retirado"
+}
+
+### AYLEN - ID inválido (400)
+PATCH http://localhost:3000/api/turnos/123/estado
+Content-Type: application/json
+
+{
+  "estado": "cancelado"
+}
