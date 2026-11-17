@@ -47,9 +47,29 @@ const listarTurnos = async (estado) => {
   return turnoRepository.listar(estado);
 };
 
+const crear = async (datos) => {
+  try {
+    const turno = await Turno.create(datos);
+    return turno.toObject();
+  } catch (error) {
+    registrarError('crear', error);
+  }
+};
+
+const obtenerUltimoNumero = async () => {
+  try {
+    const turno = await Turno.findOne().sort({ numero: -1 }).lean();
+    return turno ? turno.numero : 0;
+  } catch (error) {
+    registrarError('obtenerUltimoNumero', error);
+  }
+};
+
 module.exports = {
   ErrorTurno,
   listarTurnos,
   lanzarError,
   crearTurno,
+  crear,
+  obtenerUltimoNumero
 };
