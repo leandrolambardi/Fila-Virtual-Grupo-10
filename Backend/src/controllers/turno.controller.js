@@ -23,6 +23,16 @@ const listarTurnos = async (req, res) => {
   }
 };
 
+const crearTurno = async (req, res) => {
+  try {
+    const turno = await turnoService.crearTurno(req.body || {});
+    res.status(201).json(turno);
+  } catch (error) {
+    responderError(res, 'crearTurno', error);
+  }
+};
+
 module.exports = {
   listarTurnos,
+  crearTurno,
 };
