@@ -1,0 +1,19 @@
+### LEANDRO - GET: listar todos los turnos
+GET http://localhost:3000/api/turnos
+
+### LEANDRO - GET: filtrar turnos en espera
+GET http://localhost:3000/api/turnos?estado=en_espera
+
+### LEANDRO - GET: filtrar turnos retirados
+GET http://localhost:3000/api/turnos?estado=retirado
+
+### LEANDRO - GET: filtrar turnos cancelados
+GET http://localhost:3000/api/turnos?estado=cancelado
+
+### LEANDRO - GET: estado inválido (400)
+GET http://localhost:3000/api/turnos?estado=invalido
+
+
+TODO OK!!
+
+-----------------------------------------------------------
