@@ -1,19 +1,8 @@
-const express = require('express');
-const router = express.Router();
+const { Router } = require('express');
+const turnoController = require('../controllers/turno.controller');
 
-const turnoController = require('../controllers/turnoController');
+const router = Router();
 
-// Obtener todos los turnos
-router.get('/', (req, res) => {
-    res.json({
-        mensaje: 'Router de turnos funcionando correctamente'
-    });
-});
+router.get('/', turnoController.listarTurnos);
 
 module.exports = router;
-
-// Obtener todos los turnos
-// Obtener un turno por ID
-// Crear un turno
-// Actualizar un turno
-// Eliminar un turno
