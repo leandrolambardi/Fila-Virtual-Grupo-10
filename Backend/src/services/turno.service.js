@@ -56,6 +56,17 @@ const crear = async (datos) => {
   }
 };
 
+const obtenerTurno = async (id) => {
+  if (!turnoRepository.esIdValido(id)) {
+    lanzarError('obtenerTurno', 400, 'El identificador del turno no es válido.');
+  }
+  const turno = await turnoRepository.buscarPorId(id);
+  if (!turno) {
+    lanzarError('obtenerTurno', 404, 'Turno no encontrado.');
+  }
+  return turno;
+};
+
 const obtenerUltimoNumero = async () => {
   try {
     const turno = await Turno.findOne().sort({ numero: -1 }).lean();
@@ -71,5 +82,6 @@ module.exports = {
   lanzarError,
   crearTurno,
   crear,
+  obtenerTurno,
   obtenerUltimoNumero
 };
