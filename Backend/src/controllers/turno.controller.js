@@ -32,7 +32,17 @@ const crearTurno = async (req, res) => {
   }
 };
 
+const obtenerTurno = async (req, res) => {
+  try {
+    const turno = await turnoService.obtenerTurno(req.params.id);
+    res.status(200).json(turno);
+  } catch (error) {
+    responderError(res, 'obtenerTurno', error);
+  }
+};
+
 module.exports = {
   listarTurnos,
   crearTurno,
+  obtenerTurno
 };
