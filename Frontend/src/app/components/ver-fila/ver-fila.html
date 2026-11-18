@@ -1,49 +1,52 @@
-<h2>Fila de turnos</h2>
+<section class="tarjeta">
+  <div class="cabecera">
+    <h2>Fila</h2>
+    <button class="boton boton-secundario" type="button" [disabled]="cargando()" (click)="cargar()">
+      Refrescar
+    </button>
+  </div>
 
-<label for="estado">Filtrar por estado:</label>
+  <div class="filtro">
+    <label for="filtro-estado">Estado</label>
+    <select id="filtro-estado" [formControl]="filtro">
+      <option value="">Todos</option>
+      <option value="en_espera">En espera</option>
+      <option value="retirado">Retirado</option>
+      <option value="cancelado">Cancelado</option>
+    </select>
+  </div>
 
-<select
-  id="estado"
-  [(ngModel)]="estadoSeleccionado"
-  (change)="cargarTurnos()"
->
-  <option value="">Todos</option>
-  <option value="en_espera">En espera</option>
-  <option value="retirado">Retirado</option>
-  <option value="cancelado">Cancelado</option>
-</select>
-
-@if (cargando) {
-  <p>Cargando turnos...</p>
-}
-
-@if (error) {
-  <p>{{ error }}</p>
-}
-
-@if (!cargando && !error) {
-  @if (turnos.length === 0) {
-    <p>No hay turnos para mostrar.</p>
-  } @else {
-    <table>
-      <thead>
-        <tr>
-          <th>Número</th>
-          <th>Nombre</th>
-          <th>Curso</th>
-          <th>Estado</th>
-        </tr>
-      </thead>
-      <tbody>
-        @for (turno of turnos; track turno._id) {
-          <tr>
-            <td>{{ turno.numero }}</td>
-            <td>{{ turno.nombre }}</td>
-            <td>{{ turno.curso }}</td>
-            <td>{{ turno.estado | estadoTexto }}</td>
-          </tr>
-        }
-      </tbody>
-    </table>
+  @if (mensajeError()) {
+    <p class="mensaje-error">{{ mensajeError() }}</p>
   }
-}
+
+  @if (turnos().length === 0) {
+    <p class="vacio">No hay turnos para mostrar.</p>
+  } @else {
+    <ul class="lista-turnos">
+      @for (turno of turnos(); track turno._id) {
+        <li class="fila-turno">
+          <span class="numero">#{{ turno.numero }}</span>
+          <div class="datos">
+            <p class="nombre">{{ turno.nombre }}</p>
+            <p class="detalle">{{ turno.curso }}</p>
+          </div>
+          <div class="estado">
+            <span
+              class="etiqueta"
+              [class.en-espera]="turno.estado === 'en_espera'"
+              [class.retirado]="turno.estado === 'retirado'"
+              [class.cancelado]="turno.estado === 'cancelado'"
+            >
+              {{ turno.estado | estadoTexto }}
+            </span>
+            @if (turno.estado === 'en_espera') {
+              <span class="posicion">Posición {{ posiciones().get(turno._id) }}</span>
+            }
+          </div>
+          <a class="enlace" [routerLink]="['/mi-turno', turno._id]">Ver turno</a>
+        </li>
+      }
+    </ul>
+  }
+</section>

@@ -1,27 +1,37 @@
-import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { urlBaseApi } from '../configuracion';
+import { Turno } from '../models/turno';
 
-import { Turno, EstadoTurno } from '../models/turno';
-import { configuracion } from '../configuracion';
-
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class TurnoService {
+  private readonly urlTurnos = `${urlBaseApi}/turnos`;
 
-  private http = inject(HttpClient);
+  constructor(private http: HttpClient) {}
 
-  private url = `${configuracion.apiUrl}/turnos`;
+  crearTurno(datos: { nombre: string; dni: string; curso: string }): Observable<Turno> {
+    return this.http.post<Turno>(this.urlTurnos, datos);
+  }
 
-  listarTurnos(estado?: EstadoTurno): Observable<Turno[]> {
+  listarTurnos(estado?: string): Observable<Turno[]> {
+    const url = estado ? `${this.urlTurnos}?estado=${estado}` : this.urlTurnos;
+    return this.http.get<Turno[]>(url);
+  }
 
-    let params = new HttpParams();
+  obtenerTurno(id: string): Observable<Turno> {
+    return this.http.get<Turno>(`${this.urlTurnos}/${id}`);
+  }
 
-    if (estado) {
-      params = params.set('estado', estado);
+  actualizarEstado(id: string, estado: string, equipo?: string): Observable<Turno> {
+    const datos: { estado: string; equipo?: string } = { estado };
+    if (equipo) {
+      datos.equipo = equipo;
     }
+    return this.http.patch<Turno>(`${this.urlTurnos}/${id}/estado`, datos);
+  }
 
-    return this.http.get<Turno[]>(this.url, { params });
+  eliminarTurno(id: string): Observable<{ mensaje: string }> {
+    return this.http.delete<{ mensaje: string }>(`${this.urlTurnos}/${id}`);
   }
 }

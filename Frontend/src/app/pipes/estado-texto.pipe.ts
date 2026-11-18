@@ -1,23 +1,15 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { EstadoTurno } from '../models/turno';
 
-@Pipe({
-  name: 'estadoTexto',
-  standalone: true
-})
+@Pipe({ name: 'estadoTexto' })
 export class EstadoTextoPipe implements PipeTransform {
-
-  transform(estado: EstadoTurno): string {
+  transform(estado: string): string {
     switch (estado) {
       case 'en_espera':
         return 'En espera';
-
       case 'retirado':
         return 'Retirado';
-
       case 'cancelado':
         return 'Cancelado';
-
       default:
         return estado;
     }

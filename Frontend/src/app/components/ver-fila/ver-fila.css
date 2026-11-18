@@ -1,24 +1,101 @@
-h2 {
-  margin-bottom: 20px;
+.cabecera {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
-select {
-  margin: 10px;
-  padding: 8px;
+.cabecera h2 {
+  margin: 0;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
+.filtro {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1rem 0;
 }
 
-th, td {
-  border: 1px solid #ccc;
-  padding: 10px;
-  text-align: left;
+.filtro label {
+  white-space: nowrap;
 }
 
-th {
-  background-color: #eee;
+.filtro select {
+  max-width: 200px;
+}
+
+.lista-turnos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.fila-turno {
+  display: grid;
+  grid-template-columns: 4rem 1fr auto auto;
+  align-items: center;
+  gap: 0.75rem;
+  border: 1px solid var(--borde);
+  border-radius: 0.4rem;
+  padding: 0.6rem 0.8rem;
+}
+
+.numero {
+  font-weight: 700;
+  color: var(--primario);
+}
+
+.nombre {
+  font-weight: 600;
+  margin: 0;
+}
+
+.detalle {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--texto-suave);
+}
+
+.estado {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  align-items: flex-start;
+}
+
+.posicion {
+  font-size: 0.8rem;
+  color: var(--texto-suave);
+  white-space: nowrap;
+}
+
+.enlace {
+  color: var(--primario);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.enlace:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 640px) {
+  .fila-turno {
+    grid-template-columns: 3rem 1fr;
+    row-gap: 0.4rem;
+  }
+
+  .estado {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .enlace {
+    grid-column: 1 / -1;
+  }
 }
