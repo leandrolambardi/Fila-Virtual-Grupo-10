@@ -1,7 +1,7 @@
 # Fila Virtual — Grupo 10
 
 **Trabajo práctico integrador · Desarrollo de Sistemas Web**  
-**Integrantes:** Leandro, Evelyn, Aylén y Eduardo.
+**Integrantes:** Leandro Lambardi, Evelyn Guzman, Aylén Molina y Eduardo Burgos.
 
 ## Descripción
 
@@ -188,6 +188,3 @@ Content-Type: application/json
 
 El desarrollo se organiza mediante ramas individuales y la integración de funcionalidades en `develop`.
 
-## Alcance
-
-Proyecto académico orientado a demostrar integración frontend–backend, operaciones CRUD, validaciones, persistencia de datos y trabajo colaborativo con Git.
