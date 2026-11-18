@@ -1,1 +1,49 @@
-<p>ver-fila works!</p>
+<h2>Fila de turnos</h2>
+
+<label for="estado">Filtrar por estado:</label>
+
+<select
+  id="estado"
+  [(ngModel)]="estadoSeleccionado"
+  (change)="cargarTurnos()"
+>
+  <option value="">Todos</option>
+  <option value="en_espera">En espera</option>
+  <option value="retirado">Retirado</option>
+  <option value="cancelado">Cancelado</option>
+</select>
+
+@if (cargando) {
+  <p>Cargando turnos...</p>
+}
+
+@if (error) {
+  <p>{{ error }}</p>
+}
+
+@if (!cargando && !error) {
+  @if (turnos.length === 0) {
+    <p>No hay turnos para mostrar.</p>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th>Número</th>
+          <th>Nombre</th>
+          <th>Curso</th>
+          <th>Estado</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (turno of turnos; track turno._id) {
+          <tr>
+            <td>{{ turno.numero }}</td>
+            <td>{{ turno.nombre }}</td>
+            <td>{{ turno.curso }}</td>
+            <td>{{ turno.estado | estadoTexto }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+}
