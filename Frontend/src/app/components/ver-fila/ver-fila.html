@@ -1,0 +1,52 @@
+<section class="tarjeta">
+  <div class="cabecera">
+    <h2>Fila</h2>
+    <button class="boton boton-secundario" type="button" [disabled]="cargando()" (click)="cargar()">
+      Refrescar
+    </button>
+  </div>
+
+  <div class="filtro">
+    <label for="filtro-estado">Estado</label>
+    <select id="filtro-estado" [formControl]="filtro">
+      <option value="">Todos</option>
+      <option value="en_espera">En espera</option>
+      <option value="retirado">Retirado</option>
+      <option value="cancelado">Cancelado</option>
+    </select>
+  </div>
+
+  @if (mensajeError()) {
+    <p class="mensaje-error">{{ mensajeError() }}</p>
+  }
+
+  @if (turnos().length === 0) {
+    <p class="vacio">No hay turnos para mostrar.</p>
+  } @else {
+    <ul class="lista-turnos">
+      @for (turno of turnos(); track turno._id) {
+        <li class="fila-turno">
+          <span class="numero">#{{ turno.numero }}</span>
+          <div class="datos">
+            <p class="nombre">{{ turno.nombre }}</p>
+            <p class="detalle">{{ turno.curso }}</p>
+          </div>
+          <div class="estado">
+            <span
+              class="etiqueta"
+              [class.en-espera]="turno.estado === 'en_espera'"
+              [class.retirado]="turno.estado === 'retirado'"
+              [class.cancelado]="turno.estado === 'cancelado'"
+            >
+              {{ turno.estado | estadoTexto }}
+            </span>
+            @if (turno.estado === 'en_espera') {
+              <span class="posicion">Posición {{ posiciones().get(turno._id) }}</span>
+            }
+          </div>
+          <a class="enlace" [routerLink]="['/mi-turno', turno._id]">Ver turno</a>
+        </li>
+      }
+    </ul>
+  }
+</section>
