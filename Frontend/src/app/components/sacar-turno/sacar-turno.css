@@ -1,0 +1,14 @@
+.formulario {
+  max-width: 420px;
+  gap: 0.9rem;
+  margin-top: 1rem;
+}
+
+.campo {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.boton {
+  justify-self: start;
+}
