@@ -1,0 +1,42 @@
+.navegacion {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 0.75rem 1.25rem;
+  border-bottom: 1px solid #d8dde5;
+  background-color: #ffffff;
+}
+
+.marca {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #1d4ed8;
+  text-decoration: none;
+}
+
+.enlaces {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.enlaces a {
+  color: #334155;
+  text-decoration: none;
+  padding-bottom: 0.15rem;
+  border-bottom: 2px solid transparent;
+}
+
+.enlaces a.activo {
+  color: #1d4ed8;
+  border-bottom-color: #1d4ed8;
+}
+
+@media (max-width: 480px) {
+  .navegacion {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
