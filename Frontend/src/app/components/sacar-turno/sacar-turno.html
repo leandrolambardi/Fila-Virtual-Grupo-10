@@ -1,0 +1,40 @@
+<section class="tarjeta">
+  <h2>Sacar turno</h2>
+  <p class="ayuda">Completá tus datos para reservar un lugar en la fila.</p>
+
+  <form class="formulario" [formGroup]="formulario" (ngSubmit)="enviar()">
+    <div class="campo">
+      <label for="nombre">Nombre y apellido</label>
+      <input id="nombre" type="text" formControlName="nombre" autocomplete="name" />
+      @if (formulario.controls.nombre.touched && formulario.controls.nombre.invalid) {
+        <p class="error-campo">Completá nombre, DNI y curso.</p>
+      }
+    </div>
+
+    <div class="campo">
+      <label for="dni">DNI</label>
+      <input id="dni" type="text" inputmode="numeric" formControlName="dni" />
+      @if (formulario.controls.dni.touched && formulario.controls.dni.invalid) {
+        <p class="error-campo">
+          {{ formulario.controls.dni.hasError('pattern') ? mensajeDni : mensajeCampos }}
+        </p>
+      }
+    </div>
+
+    <div class="campo">
+      <label for="curso">Curso</label>
+      <input id="curso" type="text" formControlName="curso" placeholder="3° B" />
+      @if (formulario.controls.curso.touched && formulario.controls.curso.invalid) {
+        <p class="error-campo">Completá nombre, DNI y curso.</p>
+      }
+    </div>
+
+    <button class="boton boton-primario" type="submit" [disabled]="enviando()">
+      {{ enviando() ? 'Enviando...' : 'Sacar turno' }}
+    </button>
+
+    @if (mensajeError()) {
+      <p class="mensaje-error">{{ mensajeError() }}</p>
+    }
+  </form>
+</section>
