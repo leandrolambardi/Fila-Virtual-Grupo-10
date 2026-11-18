@@ -1,0 +1,45 @@
+.siguiente {
+  display: grid;
+  gap: 0.2rem;
+  border: 1px solid var(--borde);
+  border-radius: 0.4rem;
+  padding: 1rem;
+  margin: 1rem 0;
+  background-color: var(--fondo);
+}
+
+.titulo-chico {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--texto-suave);
+}
+
+.numero {
+  margin: 0;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: var(--primario);
+}
+
+.dato {
+  margin: 0;
+}
+
+.formulario {
+  gap: 0.85rem;
+  max-width: 420px;
+}
+
+.campo {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
