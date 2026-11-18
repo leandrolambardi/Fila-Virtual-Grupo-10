@@ -1,0 +1,72 @@
+<section class="tarjeta">
+  @if (eliminado()) {
+    <h2>Mi turno</h2>
+    <p class="mensaje-exito">{{ mensajeResultado() }}</p>
+    <p>
+      <a class="boton boton-primario" routerLink="/sacar-turno">Sacar otro turno</a>
+    </p>
+  } @else if (turno(); as turno) {
+    <h2>Mi turno #{{ turno.numero }}</h2>
+
+    <dl class="detalle-turno">
+      <dt>Número</dt>
+      <dd>{{ turno.numero }}</dd>
+
+      <dt>Nombre</dt>
+      <dd>{{ turno.nombre }}</dd>
+
+      <dt>DNI</dt>
+      <dd>{{ turno.dni }}</dd>
+
+      <dt>Curso</dt>
+      <dd>{{ turno.curso }}</dd>
+
+      <dt>Estado</dt>
+      <dd>
+        <span
+          class="etiqueta"
+          [class.en-espera]="turno.estado === 'en_espera'"
+          [class.retirado]="turno.estado === 'retirado'"
+          [class.cancelado]="turno.estado === 'cancelado'"
+        >
+          {{ turno.estado | estadoTexto }}
+        </span>
+      </dd>
+
+      <dt>Fecha de creación</dt>
+      <dd>{{ turno.fechaCreacion | date: 'dd/MM/yyyy HH:mm' }}</dd>
+
+      @if (turno.estado === 'retirado') {
+        <dt>Fecha de retiro</dt>
+        <dd>{{ turno.fechaRetiro | date: 'dd/MM/yyyy HH:mm' }}</dd>
+
+        <dt>Equipo</dt>
+        <dd>{{ turno.equipo }}</dd>
+      }
+    </dl>
+
+    @if (confirmando()) {
+      <div class="confirmacion">
+        <p>¿Eliminar este turno?</p>
+        <button class="boton boton-secundario" type="button" (click)="cancelarConfirmacion()">
+          Volver
+        </button>
+        <button class="boton boton-eliminar" type="button" (click)="eliminarTurno()">
+          Eliminar
+        </button>
+      </div>
+    } @else {
+      <button class="boton boton-eliminar" type="button" (click)="mostrarConfirmacion()">
+        Eliminar turno
+      </button>
+    }
+  } @else if (!mensajeError()) {
+    <h2>Mi turno</h2>
+    <p class="vacio">Cargando...</p>
+  }
+
+  @if (mensajeError()) {
+    <h2>Mi turno</h2>
+    <p class="mensaje-error">{{ mensajeError() }}</p>
+  }
+</section>
