@@ -1,0 +1,47 @@
+<section class="tarjeta">
+  <h2>Atención</h2>
+
+  @if (mensajeError()) {
+    <p class="mensaje-error">{{ mensajeError() }}</p>
+  }
+
+  @if (cargando()) {
+    <p class="vacio">Cargando...</p>
+  }
+
+  @if (turno(); as siguiente) {
+    <section class="siguiente">
+      <p class="titulo-chico">Siguiente turno</p>
+      <p class="numero">#{{ siguiente.numero }}</p>
+      <p class="dato">{{ siguiente.nombre }}</p>
+      <p class="dato">DNI {{ siguiente.dni }}</p>
+      <p class="dato">Curso {{ siguiente.curso }}</p>
+    </section>
+
+    <form class="formulario" [formGroup]="formulario" (ngSubmit)="marcarRetirado()">
+      <div class="campo">
+        <label for="equipo">Equipo entregado</label>
+        <input id="equipo" type="text" formControlName="equipo" placeholder="Ej.: PC-12" />
+        @if (formulario.controls.equipo.touched && formulario.controls.equipo.invalid) {
+          <p class="error-campo">Indicá el equipo entregado para registrar el retiro.</p>
+        }
+      </div>
+
+      <div class="acciones">
+        <button class="boton boton-primario" type="submit" [disabled]="procesando()">
+          Marcar retirado
+        </button>
+        <button
+          class="boton boton-eliminar"
+          type="button"
+          [disabled]="procesando()"
+          (click)="cancelarTurno()"
+        >
+          Cancelar turno
+        </button>
+      </div>
+    </form>
+  } @else if (!cargando() && !mensajeError()) {
+    <p class="vacio">No hay turnos en espera.</p>
+  }
+</section>
